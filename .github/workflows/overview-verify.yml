@@ -1,0 +1,68 @@
+name: Verify PPT-faithful overview
+on:
+  push:
+    paths: ['Demo_Video/overview/**', 'tests/overview-browser.mjs', '.github/workflows/overview-verify.yml']
+  workflow_dispatch:
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+concurrency:
+  group: overview-verification
+  cancel-in-progress: true
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install browser test dependencies
+        run: |
+          npm install --no-save --package-lock=false playwright@1.55.0
+          npx playwright install --with-deps chromium
+      - name: Test exact committed HTML and resources
+        run: |
+          python3 -m http.server 8765 > /tmp/overview-http.log 2>&1 &
+          node tests/overview-browser.mjs
+      - name: Save passing browser report
+        run: |
+          cp overview-verification/browser.json Demo_Video/overview/verification/http-browser.json
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add Demo_Video/overview/verification/http-browser.json
+          git diff --cached --quiet || git commit -m 'Record HTTP browser checks for the PPT-faithful overview'
+          git pull --rebase origin main
+          git push origin main
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: overview-browser-evidence
+          path: overview-verification/
+      - uses: actions/upload-artifact@v4
+        with:
+          name: PingPongDuo-Overview-Complete
+          path: Demo_Video/overview/
+      - name: Prepare static Pages payload
+        run: |
+          mkdir -p pages
+          cp -r Demo_Video pages/
+          cp index.html .nojekyll pages/
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: pages
+  publish:
+    needs: verify
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - uses: actions/configure-pages@v5
+        with:
+          enablement: true
+      - uses: actions/deploy-pages@v4
+        id: deploy

@@ -1,0 +1,86 @@
+name: Import verified animated overview
+on:
+  push:
+    paths: ['.github/workflows/import-overview.yml']
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  import:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - name: Restore and verify uploaded website bytes
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          python3 - <<'PY'
+          import base64, hashlib, io, json, os, pathlib, shutil, urllib.request, zipfile
+          parts = [
+            ('405a0b0c45f9a41abd9e239018ed8295021795d8', '405a0b0c45f9a41abd9e239018ed8295021795d8', 12000),
+            ('5bd086443f5507446d87a2b1c9b7c172f71b0415', '8b492bacc4c58a90e52d520b7390511f71708ef1', 12000),
+            ('cc73b994ea69a002b26c3b2cd634b521210690ec', 'cc73b994ea69a002b26c3b2cd634b521210690ec', 12000),
+            ('febfdc014fd89eb0e2796d02fb58ec062012fa41', 'febfdc014fd89eb0e2796d02fb58ec062012fa41', 12000),
+            ('f0e8cc93735f04f5211e534c483016ef200f489c', 'f0e8cc93735f04f5211e534c483016ef200f489c', 12000),
+            ('4ddb94a1fa77cd6f89068e864194cbbf1aff8ed9', '4ddb94a1fa77cd6f89068e864194cbbf1aff8ed9', 12000),
+            ('16ad996d4e04083cf1b527a043a26643a292fc5f', '33ed4ad61d01b1ef8c380a8152b646963de8f282', 6492),
+          ]
+          expected = 'ea6e2fb59d93c749a02a9fca89e0481141549e5f0d076d71f4ec9596e0ea6fb4'
+          def git_sha(data):
+              return hashlib.sha1(b'blob ' + str(len(data)).encode() + b'\0' + data).hexdigest()
+          chunks=[]
+          for index,(uploaded, original, size) in enumerate(parts):
+              request=urllib.request.Request(f'https://api.github.com/repos/{os.environ["GH_REPO"]}/git/blobs/{uploaded}', headers={'Authorization':f'Bearer {os.environ["GH_TOKEN"]}', 'Accept':'application/vnd.github+json','User-Agent':'verified-site-import'})
+              with urllib.request.urlopen(request, timeout=30) as response:
+                  payload=json.load(response)
+              data=base64.b64decode(payload['content'])
+              assert git_sha(data)==uploaded, f'Uploaded part {index} is not the requested Git object'
+              # Correct two known text-transport slips, never content edits.
+              # Each restoration is accepted only by its original Git SHA and the complete ZIP SHA-256.
+              if index==1:
+                  encoded=base64.b64encode(data).decode()
+                  old='ctlOMKEy4Ldi2bdu2bdu2bdu2bdu2be62'
+                  assert encoded.count(old)==1
+                  data=base64.b64decode(encoded.replace(old,'ctlOMKEy4Ldi2bdu2bdu2bdu2be62'),validate=True)
+              if index==6:
+                  encoded=base64.b64encode(data).decode()
+                  assert encoded.count('UVSFZYJ46')==1
+                  data=base64.b64decode(encoded.replace('UVSFZYJ46','UVSFZY46')+'A',validate=True)
+              assert len(data)==size and git_sha(data)==original, f'Original part {index} checksum mismatch'
+              chunks.append(data)
+          bundle=b''.join(chunks)
+          assert len(bundle)==78492 and hashlib.sha256(bundle).hexdigest()==expected
+          destination=pathlib.Path('Demo_Video/overview')
+          destination.mkdir(parents=True,exist_ok=True)
+          with zipfile.ZipFile(io.BytesIO(bundle)) as archive:
+              assert archive.testzip() is None
+              for member in archive.infolist():
+                  name=pathlib.PurePosixPath(member.filename)
+                  assert name.parts[0]=='Demo_Video' and '..' not in name.parts and not name.is_absolute()
+                  target=destination.joinpath(*name.parts[1:])
+                  target.parent.mkdir(parents=True,exist_ok=True)
+                  target.write_bytes(archive.read(member))
+          # Keep existing website work intact. This is a separate PPT-faithful entry.
+          if pathlib.Path('Demo_Video/archify/deployment.html').exists():
+              shutil.copytree('Demo_Video/archify',destination/'archify',dirs_exist_ok=True)
+              shutil.copy2('Demo_Video/source/deployment.dataflow.json',destination/'source/deployment.dataflow.json')
+          pathlib.Path('.build').mkdir(exist_ok=True)
+          pathlib.Path('.build/overview-source.zip').write_bytes(bundle)
+          (destination/'verification/import.json').write_text(json.dumps({'ok':True,'bundleSha256':expected,'bytes':len(bundle),'source':'Overview_fig.pptx, page 1','entry':'Demo_Video/overview/index.html'},indent=2)+'\n')
+          print('Verified all 7 uploaded chunks and restored the 9-file website.')
+          PY
+      - name: Commit the verified website
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add Demo_Video/overview .build/overview-source.zip
+          git diff --cached --quiet || git commit -m 'Add PPT-faithful animated overview, exact verified assets and Archify viewer'
+          git pull --rebase origin main
+          git push origin main
+      - uses: actions/upload-artifact@v4
+        with:
+          name: PPT-faithful-overview
+          path: Demo_Video/overview/

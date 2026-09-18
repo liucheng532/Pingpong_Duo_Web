@@ -1,0 +1,67 @@
+name: Verify and publish website
+on:
+  push:
+    paths: ['Demo_Video/index.html', 'Demo_Video/assets/**', 'tests/**', 'index.html', '.github/workflows/website.yml']
+  workflow_dispatch:
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+concurrency:
+  group: website
+  cancel-in-progress: true
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install browser test tooling
+        run: |
+          npm install --no-save --package-lock=false playwright@1.55.0
+          npx playwright install --with-deps chromium
+      - name: Test the exact website files
+        run: |
+          python3 -m http.server 8765 > /tmp/site-server.log 2>&1 &
+          node tests/browser.mjs
+      - name: Package the site
+        run: |
+          mkdir -p package
+          cp -r Demo_Video package/
+          cp index.html README.md .nojekyll package/
+          cp -r verification package/
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: browser-evidence
+          path: verification/
+      - uses: actions/upload-artifact@v4
+        with:
+          name: PingPongDuo-site
+          path: package/
+      - name: Save browser evidence
+        run: |
+          cp verification/browser.json Demo_Video/source/browser.json
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add Demo_Video/source/browser.json
+          git diff --cached --quiet || git commit -m 'Record browser checks for delivered website'
+          git pull --rebase origin main
+          git push
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: package
+  deploy:
+    needs: verify
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/configure-pages@v5
+        with:
+          enablement: true
+      - uses: actions/deploy-pages@v4
+        id: deployment

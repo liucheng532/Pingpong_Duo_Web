@@ -1,0 +1,166 @@
+{
+  "ok": true,
+  "method": "GitHub Actions Chromium over HTTP using exact committed files",
+  "checks": [
+    {
+      "name": "12 original signal routes",
+      "ok": true
+    },
+    {
+      "name": "original AVIF image decodes",
+      "ok": true
+    },
+    {
+      "name": "select ready",
+      "ok": true
+    },
+    {
+      "name": "matched skill ready",
+      "ok": true
+    },
+    {
+      "name": "select strike",
+      "ok": true
+    },
+    {
+      "name": "matched skill strike",
+      "ok": true
+    },
+    {
+      "name": "select clear",
+      "ok": true
+    },
+    {
+      "name": "matched skill clear",
+      "ok": true
+    },
+    {
+      "name": "select wait",
+      "ok": true
+    },
+    {
+      "name": "matched skill wait",
+      "ok": true
+    },
+    {
+      "name": "select recover",
+      "ok": true
+    },
+    {
+      "name": "matched skill recover",
+      "ok": true
+    },
+    {
+      "name": "shared clock advances",
+      "ok": true
+    },
+    {
+      "name": "signal moves",
+      "ok": true
+    },
+    {
+      "name": "pause freezes clock",
+      "ok": true
+    },
+    {
+      "name": "pause freezes signals",
+      "ok": true
+    },
+    {
+      "name": "view deploy",
+      "ok": true
+    },
+    {
+      "name": "view train",
+      "ok": true
+    },
+    {
+      "name": "view full",
+      "ok": true
+    },
+    {
+      "name": "reduced motion",
+      "ok": true
+    },
+    {
+      "name": "viewport 1440x900",
+      "ok": true
+    },
+    {
+      "name": "viewport 1600x1000",
+      "ok": true
+    },
+    {
+      "name": "viewport 1920x1080",
+      "ok": true
+    },
+    {
+      "name": "viewport 2048x1320",
+      "ok": true
+    },
+    {
+      "name": "viewport 390x844",
+      "ok": true
+    },
+    {
+      "name": "viewport 820x1180",
+      "ok": true
+    },
+    {
+      "name": "genuine Archify viewer loads",
+      "ok": true
+    },
+    {
+      "name": "no failed resources",
+      "ok": true
+    },
+    {
+      "name": "no JavaScript errors",
+      "ok": true
+    },
+    {
+      "name": "OS reduced motion starts still",
+      "ok": true
+    }
+  ],
+  "viewports": [
+    {
+      "width": 1440,
+      "height": 900,
+      "scrollWidth": 1440,
+      "scrollHeight": 900
+    },
+    {
+      "width": 1600,
+      "height": 1000,
+      "scrollWidth": 1600,
+      "scrollHeight": 1000
+    },
+    {
+      "width": 1920,
+      "height": 1080,
+      "scrollWidth": 1920,
+      "scrollHeight": 1080
+    },
+    {
+      "width": 2048,
+      "height": 1320,
+      "scrollWidth": 2048,
+      "scrollHeight": 1320
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "scrollWidth": 390,
+      "scrollHeight": 844
+    },
+    {
+      "width": 820,
+      "height": 1180,
+      "scrollWidth": 820,
+      "scrollHeight": 1180
+    }
+  ],
+  "errors": [],
+  "failed": []
+}

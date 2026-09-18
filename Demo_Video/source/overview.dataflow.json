@@ -29,6 +29,6 @@
     {"id":"arm-residual","from":"residual","to":"sum","label":"arm residual","fromSide":"bottom","toSide":"top","labelAt":[530,327]},
     {"id":"refined-output","from":"sum","to":"select","label":"refined action","route":"straight","fromSide":"right","toSide":"left"},
     {"id":"phase-gate","from":"phases","to":"select","label":"task phase","variant":"dashed","fromSide":"right","toSide":"right","via":[[840,157],[840,385]],"labelAt":[840,265]},
-    {"id":"robot-output","from":"select","to":"actions","label":"selected action"}
+    {"id":"robot-output","from":"select","to":"actions","label":"selected action","labelAt":[852.5,430]}
   ]
 }

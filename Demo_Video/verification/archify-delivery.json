@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "ok": true,
+  "command": "deliver",
+  "type": "dataflow",
+  "input": "/home/runner/work/Pingpong_Duo_Web/Pingpong_Duo_Web/Demo_Video/source/overview.dataflow.json",
+  "output": "/home/runner/work/Pingpong_Duo_Web/Pingpong_Duo_Web/Demo_Video/archify-flow.html",
+  "specification": {
+    "sha256": "34ff70a9add41bee19b827d31d837691b33e6b6ea033cafd8c8c226c1f3aab6b",
+    "bytes": 2904
+  },
+  "artifact": {
+    "sha256": "b8709afdab998216aae0c3b14ca560b6d7452651b7e526464af24e113cc8529b",
+    "bytes": 808117
+  },
+  "validation": {
+    "checksPassed": 9,
+    "checkCount": 9,
+    "compositionProfile": "showcase",
+    "compositionStatus": "pass",
+    "errors": 0,
+    "warnings": 0
+  }
+}

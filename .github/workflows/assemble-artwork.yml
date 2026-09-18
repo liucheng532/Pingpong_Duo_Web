@@ -1,0 +1,72 @@
+name: Assemble source artwork
+on:
+  push:
+    paths: ['.asset-upload/**', '.github/workflows/assemble-artwork.yml']
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: artwork-assembly
+  cancel-in-progress: true
+jobs:
+  assemble:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Reconstruct and verify exact image bytes
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import base64, hashlib, json, re
+          from pathlib import Path
+          expected = [
+          'c812f5e41f05de7654c61e8eb22d987bc7935939e135450ab5e4ecdd9a99d5c0',
+          '9d15ff81595b191a6d8df1f3a874b57b09a97518314e7b21b000212f4154057d',
+          'c19c50d05e5b493c65a6caf75726182880ad2bdf2e16a4d075dbeaab1857e5cd',
+          '39ab4b774225b2998852cbcec2ba4c58a5f4e4bb23e10d81b3a7bf3fcde1daf9',
+          '485d0938b58c87c90a0fab4bcf43edf1709f651529772cb523fe72b1ff34f3b3',
+          '6e3fe2847f3f1382ad7f3d3ff4f098759c54e40942b211b7d96b3dc598dc2ab3',
+          '4e830d1162108c19d09d7411ff3877fbd8dcba610791f48a6b6ed1cd369c0919']
+          sha = lambda b: hashlib.sha256(b).hexdigest()
+          image_sha = '4df36e93bb27b318e6b66465e446ed87020e2eead3422511b319e6cdced6aa25'
+          target = Path('Demo_Video/assets/overview.webp')
+          if not Path('.asset-upload').exists():
+              assert target.exists() and sha(target.read_bytes()) == image_sha
+              print('Verified already assembled artwork.'); raise SystemExit(0)
+          pieces = []
+          for i, digest in enumerate(expected):
+              f = Path(f'.asset-upload/p{i:02}.b64')
+              assert f.exists(), f'Missing {f}'
+              raw = re.sub(r'\s+', '', f.read_text())
+              raw = re.sub(r'~(\d+),([A-Za-z0-9+/]+)~', lambda m: m[2]*int(m[1]), raw).encode()
+              wanted = 9640 if i == 6 else 12000
+              extra = len(raw) - wanted
+              if sha(raw) != digest and 0 < extra <= 10:
+                  # A transport repetition may be removed only with exact SHA proof.
+                  for pos in range(len(raw)-extra+1):
+                      candidate = raw[:pos] + raw[pos+extra:]
+                      if sha(candidate) == digest:
+                          raw = candidate; print(f'{f}: corrected transport repetition at {pos}'); break
+              print(f'{f}: {len(raw)} chars, {sha(raw)}')
+              assert len(raw) == wanted and sha(raw) == digest, f'Chunk integrity failure: {f}'
+              pieces.append(raw)
+          image = base64.b64decode(b''.join(pieces), validate=True)
+          assert len(image) == 61228 and sha(image) == image_sha, 'Final image integrity failure'
+          target.parent.mkdir(parents=True, exist_ok=True)
+          target.write_bytes(image)
+          proof = {'source':'Overview_fig.pptx, slide 1', 'artifact':'assets/overview.webp', 'sha256':image_sha, 'bytes':len(image), 'verified':True, 'note':'Source artwork; animated overlays are illustrative.'}
+          Path('Demo_Video/source/artwork.json').write_text(json.dumps(proof, indent=2)+'\n')
+          print('Source artwork verified:', image_sha)
+          PY
+      - name: Commit verified artwork
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add Demo_Video/assets/overview.webp Demo_Video/source/artwork.json
+          git rm -r --ignore-unmatch .asset-upload
+          git diff --cached --quiet || git commit -m 'Add verified original-slide artwork and remove transport chunks'
+          git pull --rebase origin main
+          git push

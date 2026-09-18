@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en" data-phase="strike" data-motion="running">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#f6f5f1">
+<title>PingPongDuo — System in motion</title>
+<meta name="description" content="Explore the PingPongDuo system overview: coordinated team planning, whole-body skills, racket-arm refinement and phase-dependent action selection.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='11' cy='16' r='8' fill='%233d657f'/%3E%3Ccircle cx='22' cy='16' r='8' fill='%23b77a4d'/%3E%3Ccircle cx='17' cy='8' r='3' fill='%23f6f5f1'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="assets/site.css">
+</head><body>
+<header class="masthead"><a class="brand" href="./" aria-label="PingPongDuo overview"><span class="brand-mark" aria-hidden="true"><i></i><i></i><b></b></span>PingPongDuo<span class="brand-divider"></span><span class="brand-sub">Research / Interactive overview</span></a><a class="repo-link" href="https://github.com/liucheng532/Pingpong_Duo_Web" target="_blank" rel="noopener">Source <span aria-hidden="true">↗</span></a></header>
+<main class="page">
+<section class="intro"><div><p class="eyebrow">HUMANOID TABLE-TENNIS DOUBLES</p><h1>Two players. One coordinated system.</h1></div><p class="intro-note">From team planning to the next return.<br>Follow the signals. Explore the handoff.</p></section>
+<section class="workspace" id="workspace" aria-label="Interactive system figure">
+<div class="workspace-top"><div class="view-tabs" role="tablist" aria-label="Diagram view"><button id="tab-overview" role="tab" aria-selected="true" aria-controls="panel-overview" data-view="overview">Overview <span>01</span></button><button id="tab-map" role="tab" aria-selected="false" aria-controls="panel-map" data-view="map" tabindex="-1">Archify signal map <span>02</span></button></div><div class="toolbar" aria-label="Playback controls"><button class="icon-button" id="reset" title="Replay (R)" aria-label="Replay">↺</button><button class="play-button" id="play" aria-pressed="true"><span class="play-icon"></span><span id="play-label">Pause</span></button><button class="icon-button" id="next" title="Next phase (right arrow)" aria-label="Next phase">⇥</button><label class="speed-label"><span class="sr-only">Playback speed</span><select id="speed"><option value="0.5">0.5×</option><option value="1" selected>1×</option><option value="1.5">1.5×</option><option value="2">2×</option></select></label><span class="tool-divider"></span><button class="icon-button" id="fullscreen" title="Full screen" aria-label="Full screen">⛶</button></div></div>
+<div id="panel-overview" role="tabpanel" aria-labelledby="tab-overview">
+<div class="phase-console"><div class="phase-heading"><span class="eyebrow">TASK PHASES</span><button id="follow-player" class="follow-player" title="Switch the followed player">Following <b>A</b> <span>⇄</span></button></div><div class="phase-options" role="group" aria-label="Select a phase"><button data-phase="ready"><span>01</span>Ready</button><button data-phase="strike" aria-pressed="true"><span>02</span>Strike</button><button data-phase="clear"><span>03</span>Clear</button><button data-phase="wait"><span>04</span>Wait</button><button data-phase="recover"><span>05</span>Recover</button></div><div class="match-status"><i></i><span id="match-status">Reference matched</span></div></div>
+<div class="artboard" id="artboard"><svg id="overview" xmlns="http://www.w3.org/2000/svg" viewBox="-2 -2 515 244" aria-labelledby="figure-title figure-description">
+<title id="figure-title">PingPongDuo: deployment and training</title>
+<desc id="figure-description">Page one of the supplied overview figure. A team planner commands footwork and striking skills. A seven-joint racket-arm correction refines striking before task-phase selection. Training comprises team planning, whole-body motion skills and residual strike refinement. The animated overlays illustrate information flow and reference selection; they are not measured robot motion.</desc>
+<defs>
+ <filter id="soft-glow" x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation=".8"/></filter>
+ <marker id="clear-arrow" viewBox="0 0 6 6" refX="5" refY="3" markerWidth="3" markerHeight="3" orient="auto"><path d="M0 0L6 3L0 6" fill="none" stroke="#367da1" stroke-width="1.1"/></marker>
+</defs>
+<image id="source-artwork" href="assets/overview.webp" x="0" y="0" width="510.25" height="269.25"/>
+<g class="figure-label-repairs"><rect x="5" y="-2" width="104" height="15" fill="white"/><text x="7.1" y="9" class="figure-section">(a) Deployment</text></g>
+<g id="effect-layer">
+ <rect class="skill-focus" data-focus="move" x="168.66" y="32.33" width="121.89" height="50.74" rx="4"/>
+ <rect class="skill-focus" data-focus="strike" x="168.66" y="89.88" width="121.89" height="54.43" rx="4"/>
+ <rect class="skill-focus" data-focus="residual" x="308.98" y="78.03" width="100.63" height="51.53" rx="4"/>
+ <rect class="skill-focus" data-focus="selector" x="445.04" y="112.84" width="36.85" height="18.14" rx="3.6"/>
+ <rect id="reference-match" class="reference-match" x="174" y="45" width="21" height="35" rx="2"/>
+ <rect id="library-match" class="library-match" x="230" y="199" width="28" height="27" rx="1.6"/>
+ <circle id="sum-halo" cx="415.28" cy="135.23" r="5.7"/>
+ <g id="flow-layer"><g class="signal" data-branch="move" data-edge="position-command"><path class="signal-base" d="M148.819,54.726 L168.661,54.726"/><path class="signal-dash" d="M148.819,54.726 L168.661,54.726"/><path class="signal-route" id="route-position-command" d="M148.819,54.726 L168.661,54.726"/><circle class="signal-head" r="1.22"/><circle class="signal-aura" r="2.45"/></g>
+<g class="signal" data-branch="strike" data-edge="racket-command"><path class="signal-base" d="M148.819,113.970 L168.661,113.970"/><path class="signal-dash" d="M148.819,113.970 L168.661,113.970"/><path class="signal-route" id="route-racket-command" d="M148.819,113.970 L168.661,113.970"/><circle class="signal-head" r="1.22"/><circle class="signal-aura" r="2.45"/></g>
+<g class="signal" data-branch="move" data-edge="move-action"><path class="signal-base" d="M290.551,54.726 L419.811,54.726 L419.811,116.237 L445.039,116.237"/><path class="signal-dash" d="M290.551,54.726 L419.811,54.726 L419.811,116.237 L445.039,116.237"/><path class="signal-route" id="route-move-action" d="M290.551,54.726 L419.811,54.726 L419.811,116.237 L445.039,116.237"/><circle class="signal-head" r="1.22"/><circle class="signal-aura" r="2.45"/></g>
+<g class="signal" data-branch="strike" data-edge="nominal-action"><path class="signal-base" d="M290.551,135.229 L410.457,135.229"/><path class="signal-dash" d="M290.551,135.229 L410.457,135.229"/><path class="signal-route" id="route-nominal-action" d="M290.551,135.229 L410.457,135.229"/><circle class="signal-head" r="1.22"/><circle class="signal-aura" r="2.45"/></g>
+<g class="signal" data-branch="residual" data-edge="arm-residual"><path class="signal-base" d="M409.606,106.883 L415.276,106.883 L415.276,130.411"/><path class="signal-dash" d="M409.606,106.883 L415.276,106.883 L415.276,130.411"/><path class="signal-route" id="route-arm-residual" d="M409.606,106.883 L415.276,106.883 L415.276,130.411"/><circle class="signal-head" r="1.22"/><circle class="signal-aura" r="2.45"/></g>
+<g class="signal" data-branch="strike" data-edge="refined-action"><path class="signal-base" d="M420.094,135.229 L430.299,135.229 L430.299,126.159 L445.039,126.159"/><path class="signal-dash" d="M420.094,135.229 L430.299,135.229 L430.299,126.159 L445.039,126.159"/><path class="signal-route" id="route-refined-action" d="M420.094,135.229 L430.299,135.229 L430.299,126.159 L445.039,126.159"/><circle class="signal-head" r="1.22"/><circle class="signal-aura" r="2.45"/></g>
+<g class="signal" data-branch="output" data-edge="robot-action"><path class="signal-base" d="M481.767,121.907 L506.551,121.907 L506.551,157.907 L1.191,157.907 L1.191,92.426 L4.609,92.426"/><path class="signal-dash" d="M481.767,121.907 L506.551,121.907 L506.551,157.907 L1.191,157.907 L1.191,92.426 L4.609,92.426"/><path class="signal-route" id="route-robot-action" d="M481.767,121.907 L506.551,121.907 L506.551,157.907 L1.191,157.907 L1.191,92.426 L4.609,92.426"/><circle class="signal-head" r="1.22"/><circle class="signal-aura" r="2.45"/></g>
+<g class="signal" data-branch="phase" data-edge="phase-select"><path class="signal-base" d="M463.465,98.663 L463.465,112.836"/><path class="signal-dash" d="M463.465,98.663 L463.465,112.836"/><path class="signal-route" id="route-phase-select" d="M463.465,98.663 L463.465,112.836"/><circle class="signal-head" r="1.22"/><circle class="signal-aura" r="2.45"/></g></g>
+ <g id="scene-effects" aria-hidden="true">
+  <path id="ball-path-a" d="M81 39 L69.5 75 Q66.5 60 62.1 88"/>
+  <path id="ball-path-b" d="M81 39 Q63 60 77 84"/>
+  <circle id="ball-halo" r="3"/><circle id="ball" r="1.05"/>
+  <circle class="impact" id="impact-outer" r="6"/><circle class="impact" id="impact-inner" r="3"/>
+  <path id="clear-path" d="M77 110 Q82 106 91 108" marker-end="url(#clear-arrow)"/>
+  <ellipse id="clear-target" cx="91" cy="108" rx="4" ry="1.8"/>
+  <ellipse id="clear-wave" cx="77" cy="110" rx="4" ry="1.8"/>
+ </g>
+ <g id="player-a" class="player-wheel" data-player="A"></g>
+ <g id="player-b" class="player-wheel" data-player="B"></g>
+ <g id="task-wheel" class="task-wheel">
+  <rect x="421" y="43" width="80" height="53" fill="#f7f9fa"/>
+  <circle class="task-orbit" cx="463.46" cy="71.8" r="14.8"/>
+  <circle id="task-progress" cx="463.46" cy="71.8" r="14.8"/>
+  <path id="task-needle" d="M463.46 61.5 L461.9 65 L465.02 65 Z"/>
+  <text id="task-player" x="463.46" y="73.7" text-anchor="middle">A</text>
+  <g id="task-nodes"></g>
+ </g>
+</g>
+</svg></div>
+<div class="playhead"><label for="timeline" class="sr-only">Scrub the illustrative phase cycle</label><input type="range" id="timeline" min="0" max="13600" step="10" value="3000"><div class="time-readout"><span id="time-current">03.0</span><span>/ 13.6 s</span></div></div>
+<div class="inspector"><div class="inspector-main"><span class="state-dot"></span><div><p class="eyebrow">SELECTED BRANCH</p><p class="selected-action" id="selected-action">Striking + arm refinement</p></div></div><div class="role-state"><span class="eyebrow">PLAYER A</span><strong id="role-a">Strike</strong></div><div class="role-state"><span class="eyebrow">PLAYER B</span><strong id="role-b">Clear</strong></div><div class="gate-state"><span class="eyebrow">ARM RESIDUAL</span><strong id="gate-status">Contact window</strong></div><p class="state-explanation" id="phase-explanation">The striking action is refined before the task-phase selector.</p></div>
+</div>
+<div id="panel-map" role="tabpanel" aria-labelledby="tab-map" hidden><div class="map-intro"><span class="eyebrow">ARCHIFY / TYPED DEPLOYMENT GRAPH</span><p>Explore nodes, follow authored relationships and open the built-in guided views.</p><a href="archify/deployment.html?theme=light" target="_blank" rel="noopener">Open full viewer ↗</a></div><iframe id="archify-frame" title="Archify deployment signal map" data-src="archify/deployment.html?theme=light" loading="lazy"></iframe></div>
+</section>
+<footer class="figure-footer"><div class="legend"><span><i class="blue"></i>Footwork</span><span><i class="orange"></i>Strike</span><span><i class="brown"></i>Arm correction</span><span><i class="slate"></i>Robot actions</span></div><button id="motion" aria-pressed="false">Reduce motion</button><span class="keyboard-hint"><kbd>Space</kbd> pause <kbd>←</kbd><kbd>→</kbd> step</span></footer>
+<details class="notes"><summary>About this visualization <span>Source figure · animation semantics · controls</span></summary><div class="notes-body"><p><strong>Source.</strong> The artwork is page 1 of the supplied <code>Overview_fig.pptx</code>. Its robots, panels and training scenes are preserved. Animated signals and selectors are separate SVG elements.</p><p><strong>Illustration, not telemetry.</strong> The phase cycle, contact window and highlighted reference poses are presentation choreography. They do not assert measured timings, an exact deployed state machine, or an online motion-matching result. The robots in the source image are still poses. The supplied archive did not contain the referenced paper/LaTeX folder.</p><p><strong>Controls.</strong> Click a task phase to pin it; Play resumes. Switch the followed player with the A/B button. Drag the timeline to inspect a moment. Pause freezes the entire animation; Reduce motion keeps a readable static diagram. Keyboard: Space, arrows and R.</p><p><strong>Archify.</strong> The second view is rendered from the checked typed source using the official Archify package. The paper-artwork overlay is custom: this preserves the slide instead of forcing its robot illustrations into software-service cards.</p></div></details>
+<div class="colophon"><span>PingPongDuo / System overview</span><span>Illustrative phase matching · not a recorded rollout</span></div>
+</main><noscript><p class="noscript-note">JavaScript is disabled. The original system figure remains visible; animation and playback controls require JavaScript.</p></noscript><script src="assets/site.js"></script></body></html>

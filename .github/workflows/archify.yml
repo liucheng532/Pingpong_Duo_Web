@@ -13,6 +13,9 @@ concurrency:
 jobs:
   render:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
     steps:
       - uses: actions/checkout@v4
       - uses: actions/checkout@v4
@@ -26,11 +29,15 @@ jobs:
           node-version: '22'
       - name: Validate typed map
         run: |
+          set -euo pipefail
           mkdir -p Demo_Video/archify
           node .tools/archify/archify/bin/archify.mjs validate dataflow Demo_Video/source/deployment.dataflow.json --quality showcase --json | tee Demo_Video/archify/validation.json
       - name: Render checked Archify artifact
         run: |
+          set -euo pipefail
           node .tools/archify/archify/bin/archify.mjs deliver dataflow Demo_Video/source/deployment.dataflow.json Demo_Video/archify/deployment.html --quality showcase --json | tee Demo_Video/archify/delivery.json
+          jq -e '.ok == true' Demo_Video/archify/delivery.json
+          test -s Demo_Video/archify/deployment.html
           cp .tools/archify/LICENSE Demo_Video/archify/LICENSE.txt
       - uses: actions/upload-artifact@v4
         if: always()
@@ -39,6 +46,7 @@ jobs:
           path: Demo_Video/archify/
       - name: Commit rendered artifact
         run: |
+          set -euo pipefail
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add Demo_Video/archify

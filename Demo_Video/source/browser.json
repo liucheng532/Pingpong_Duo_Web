@@ -1,0 +1,131 @@
+{
+  "ok": true,
+  "checks": [
+    {
+      "name": "eight original signal routes",
+      "ok": true
+    },
+    {
+      "name": "source artwork decoded",
+      "ok": true
+    },
+    {
+      "name": "Strike selects striking skill",
+      "ok": true
+    },
+    {
+      "name": "illustrative strike contact gate",
+      "ok": true
+    },
+    {
+      "name": "A strikes, B clears",
+      "ok": true
+    },
+    {
+      "name": "pause freezes both clocks",
+      "ok": true
+    },
+    {
+      "name": "Clear selects footwork",
+      "ok": true
+    },
+    {
+      "name": "Clear bypasses arm residual",
+      "ok": true
+    },
+    {
+      "name": "clearing cue visible",
+      "ok": true
+    },
+    {
+      "name": "player follow switches",
+      "ok": true
+    },
+    {
+      "name": "SVG selector is keyboard operable",
+      "ok": true
+    },
+    {
+      "name": "scrubber changes phase",
+      "ok": true
+    },
+    {
+      "name": "play advances synchronized clocks",
+      "ok": true
+    },
+    {
+      "name": "reduced motion pauses animation",
+      "ok": true
+    },
+    {
+      "name": "no horizontal overflow 1440x900",
+      "ok": true
+    },
+    {
+      "name": "no horizontal overflow 1600x1000",
+      "ok": true
+    },
+    {
+      "name": "no horizontal overflow 1920x1080",
+      "ok": true
+    },
+    {
+      "name": "no horizontal overflow 2048x1320",
+      "ok": true
+    },
+    {
+      "name": "no horizontal overflow 390x844",
+      "ok": true
+    },
+    {
+      "name": "actual Archify SVG viewer loaded",
+      "ok": true
+    },
+    {
+      "name": "overview restores after map",
+      "ok": true
+    },
+    {
+      "name": "no failed resource responses",
+      "ok": true
+    },
+    {
+      "name": "no JavaScript errors",
+      "ok": true
+    }
+  ],
+  "sizes": [
+    {
+      "width": 1440,
+      "scrollWidth": 1440,
+      "scrollHeight": 1010,
+      "height": 900
+    },
+    {
+      "width": 1600,
+      "scrollWidth": 1600,
+      "scrollHeight": 1117,
+      "height": 1000
+    },
+    {
+      "width": 1920,
+      "scrollWidth": 1920,
+      "scrollHeight": 1201,
+      "height": 1080
+    },
+    {
+      "width": 2048,
+      "scrollWidth": 2048,
+      "scrollHeight": 1320,
+      "height": 1320
+    },
+    {
+      "width": 390,
+      "scrollWidth": 390,
+      "scrollHeight": 844,
+      "height": 844
+    }
+  ],
+  "errors": [],
+  "failed": []
+}

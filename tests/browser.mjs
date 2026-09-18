@@ -13,14 +13,14 @@ try {
  await page.waitForFunction(()=>!!window.PingPongDuo);
  check('eight original signal routes',await page.locator('.signal').count()===8);
  check('source artwork decoded',await page.evaluate(async()=>{const i=new Image();i.src=document.querySelector('#source-artwork').getAttribute('href');await i.decode();return i.naturalWidth===1400;}));
- await page.locator('[data-phase="strike"]').click();
+ await page.locator('.phase-options [data-phase="strike"]').click();
  check('Strike selects striking skill',(await snap()).skill==='strike');
  check('illustrative strike contact gate',(await snap()).residual==='active');
  check('A strikes, B clears',await page.locator('#role-a').textContent()==='Strike'&&await page.locator('#role-b').textContent()==='Clear');
  await page.waitForTimeout(400);const frozen=await snap();await page.waitForTimeout(200);const frozen2=await snap();
  check('pause freezes both clocks',frozen.time===frozen2.time&&frozen.flowTime===frozen2.flowTime);
  await page.screenshot({path:out+'/overview-strike.png',fullPage:true});
- await page.locator('[data-phase="clear"]').click();
+ await page.locator('.phase-options [data-phase="clear"]').click();
  check('Clear selects footwork',(await snap()).skill==='move');
  check('Clear bypasses arm residual',(await snap()).residual==='bypassed');
  check('clearing cue visible',Number(await page.locator('#clear-path').getAttribute('opacity'))>0);
@@ -48,7 +48,8 @@ try {
  await page.screenshot({path:out+'/archify-embedded.png',fullPage:true});
  await page.locator('#tab-overview').click();check('overview restores after map',await page.locator('#panel-overview').isVisible());
  check('no failed resource responses',failed.length===0);check('no JavaScript errors',errors.length===0);
-} finally {
+} catch(error) {checks.push({name:'test completion',ok:false,error:String(error)});throw error;}
+finally {
  await writeFile(out+'/browser.json',JSON.stringify({ok:checks.every(c=>c.ok)&&!errors.length&&!failed.length,checks,sizes,errors,failed},null,2));
  await browser.close();
 }

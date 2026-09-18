@@ -11,7 +11,7 @@
  {"id":"striking","type":"backend","label":"Striking skill","sublabel":"π strike","stage":1,"row":2},
  {"id":"sum","type":"backend","label":"Action sum","sublabel":"nominal + correction","stage":2,"row":2},
  {"id":"residual","type":"backend","label":"Racket-arm refinement","sublabel":"7-joint correction","stage":2,"row":3,"width":168},
- {"id":"phases","type":"external","label":"Task phases","sublabel":"phase-dependent selection","stage":3,"row":0},
+ {"id":"phases","type":"external","label":"Task phases","sublabel":"phase-dependent selection","stage":3,"row":0,"width":168},
  {"id":"selector","type":"backend","label":"Select","sublabel":"chosen skill action","stage":3,"row":1},
  {"id":"robots","type":"external","label":"Robot actions","sublabel":"players A and B","stage":4,"row":1}],
  "flows":[

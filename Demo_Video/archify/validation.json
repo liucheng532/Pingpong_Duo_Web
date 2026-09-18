@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "ok": false,
+  "command": "validate",
+  "stage": "render",
+  "type": "dataflow",
+  "input": "/home/runner/work/Pingpong_Duo_Web/Pingpong_Duo_Web/Demo_Video/source/deployment.dataflow.json",
+  "error": "Data-flow layout validation failed:\n- Label \"Racket-arm refinement\" (~130px) is wider than node \"residual\" (112px) — shorten the label or increase node.width.\n- Label \"Task phase\" overlaps node \"phases\" — adjust labelDx/labelDy/labelSegment or set labelAt.\n  label rect: [715, 165, 61, 16]\n  node \"phases\" rect: [689, 128, 112, 58]\n  Suggested fix: labelAt [745, 200] or labelDy +24 (below); or labelAt [745, 124] or labelDy -52 (above)",
+  "diagnostics": [
+    {
+      "code": "layout/constraint",
+      "severity": "error",
+      "message": "Label \"Racket-arm refinement\" (~130px) is wider than node \"residual\" (112px) — shorten the label or increase node.width.",
+      "subject": {
+        "diagramType": "dataflow"
+      },
+      "evidence": {},
+      "supportedFixes": []
+    },
+    {
+      "code": "layout/constraint",
+      "severity": "error",
+      "message": "Label \"Task phase\" overlaps node \"phases\" — adjust labelDx/labelDy/labelSegment or set labelAt.\n  label rect: [715, 165, 61, 16]\n  node \"phases\" rect: [689, 128, 112, 58]\n  Suggested fix: labelAt [745, 200] or labelDy +24 (below); or labelAt [745, 124] or labelDy -52 (above)",
+      "subject": {
+        "diagramType": "dataflow"
+      },
+      "evidence": {},
+      "supportedFixes": []
+    }
+  ]
+}

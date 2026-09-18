@@ -1,0 +1,47 @@
+name: Build Archify map
+on:
+  push:
+    paths:
+      - 'Demo_Video/source/*.dataflow.json'
+      - '.github/workflows/archify.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: archify-build
+  cancel-in-progress: true
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with:
+          repository: tt-a1i/archify
+          ref: 72c750bb070d95171dbb2244e5b62b1b7da69c12
+          path: .tools/archify
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Validate typed map
+        run: |
+          mkdir -p Demo_Video/archify
+          node .tools/archify/archify/bin/archify.mjs validate dataflow Demo_Video/source/deployment.dataflow.json --quality showcase --json | tee Demo_Video/archify/validation.json
+      - name: Render checked Archify artifact
+        run: |
+          node .tools/archify/archify/bin/archify.mjs deliver dataflow Demo_Video/source/deployment.dataflow.json Demo_Video/archify/deployment.html --quality showcase --json | tee Demo_Video/archify/delivery.json
+          cp .tools/archify/LICENSE Demo_Video/archify/LICENSE.txt
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: archify-map
+          path: Demo_Video/archify/
+      - name: Commit rendered artifact
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add Demo_Video/archify
+          git diff --cached --quiet || git commit -m 'Build verified Archify deployment map'
+          git pull --rebase origin main
+          git push

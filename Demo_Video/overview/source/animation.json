@@ -1,0 +1,89 @@
+{
+  "source": "Overview_fig.pptx / slide 1",
+  "coordinateSystem": [
+    510.25,
+    240
+  ],
+  "mode": "illustrative, not live telemetry",
+  "phaseOrder": [
+    "Ready",
+    "Strike",
+    "Clear",
+    "Wait",
+    "Recover"
+  ],
+  "edges": [
+    {
+      "id": "position-command",
+      "path": "M148.82 54.73 H168.66",
+      "kind": "move",
+      "delay": 0
+    },
+    {
+      "id": "racket-command",
+      "path": "M148.82 113.97 H168.66",
+      "kind": "hit",
+      "delay": 0
+    },
+    {
+      "id": "footwork-action",
+      "path": "M290.55 54.73 H419.81 V116.24 H445.04",
+      "kind": "move",
+      "delay": 1
+    },
+    {
+      "id": "nominal-action",
+      "path": "M290.55 135.23 H410.46",
+      "kind": "hit",
+      "delay": 1
+    },
+    {
+      "id": "arm-residual",
+      "path": "M409.61 106.88 H415.28 V130.41",
+      "kind": "arm",
+      "delay": 1.2
+    },
+    {
+      "id": "refined-action",
+      "path": "M420.10 135.23 H430.30 V126.16 H445.04",
+      "kind": "hit",
+      "delay": 2
+    },
+    {
+      "id": "phase-select",
+      "path": "M463.46 98.66 V112.84",
+      "kind": "phase",
+      "delay": 1.5
+    },
+    {
+      "id": "robot-actions",
+      "path": "M481.89 121.91 H506.55 V157.91 H1.19 V92.43 H7.09",
+      "kind": "action",
+      "delay": 2.5
+    },
+    {
+      "id": "reference-footwork",
+      "path": "M225.12 210.52 H216.00",
+      "kind": "move",
+      "delay": 0.6
+    },
+    {
+      "id": "reference-striking",
+      "path": "M293.61 207.68 H302.73",
+      "kind": "hit",
+      "delay": 0.6
+    },
+    {
+      "id": "risk-training",
+      "path": "M92.79 209.32 H81.25",
+      "kind": "risk",
+      "delay": 1.0
+    },
+    {
+      "id": "footwork-sequence",
+      "path": "M184.82 80.52 H275.53",
+      "kind": "move",
+      "delay": 0.3
+    }
+  ]
+}

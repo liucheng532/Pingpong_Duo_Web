@@ -1,0 +1,91 @@
+{
+  "method": "Chromium page.set_content with exact HTML/CSS/JS and original AVIF inlined; URL navigation blocked by environment policy",
+  "viewports": [
+    {
+      "width": 1440,
+      "height": 900,
+      "scrollWidth": 1440,
+      "scrollHeight": 900
+    },
+    {
+      "width": 1600,
+      "height": 1000,
+      "scrollWidth": 1600,
+      "scrollHeight": 1000
+    },
+    {
+      "width": 1920,
+      "height": 1080,
+      "scrollWidth": 1920,
+      "scrollHeight": 1080
+    },
+    {
+      "width": 2048,
+      "height": 1320,
+      "scrollWidth": 2048,
+      "scrollHeight": 1320
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "scrollWidth": 390,
+      "scrollHeight": 844
+    },
+    {
+      "width": 820,
+      "height": 1180,
+      "scrollWidth": 820,
+      "scrollHeight": 1180
+    }
+  ],
+  "checks": {
+    "ready": {
+      "phase": "ready",
+      "playing": false,
+      "skill": "Footwork skill",
+      "footwork": true,
+      "strike": false
+    },
+    "strike": {
+      "phase": "strike",
+      "playing": false,
+      "skill": "Striking + arm refinement",
+      "footwork": false,
+      "strike": true
+    },
+    "clear": {
+      "phase": "clear",
+      "playing": false,
+      "skill": "Footwork skill",
+      "footwork": true,
+      "strike": false
+    },
+    "wait": {
+      "phase": "wait",
+      "playing": false,
+      "skill": "Footwork skill",
+      "footwork": true,
+      "strike": false
+    },
+    "recover": {
+      "phase": "recover",
+      "playing": false,
+      "skill": "Footwork skill",
+      "footwork": true,
+      "strike": false
+    },
+    "flow_moves": true,
+    "pause_freezes_clock": true,
+    "pause_freezes_packet": true,
+    "view_deploy": "0 0 510.25 159",
+    "view_train": "0 159 510.25 81",
+    "view_full": "0 0 510.25 240",
+    "reduced": {
+      "reduced": true,
+      "playing": false,
+      "light": "0"
+    },
+    "page_errors": [],
+    "os_reduced_starts_still": true
+  }
+}

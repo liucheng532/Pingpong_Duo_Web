@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+  "diagram_type": "dataflow",
+  "meta": {
+    "title": "PingPongDuo | Deployment",
+    "locale": "en",
+    "animation": "trace",
+    "visual_preset": "editorial",
+    "quality_profile": "showcase",
+    "viewBox": [1500, 660],
+    "views": [
+      {"id":"positioning","label":"Positioning","focus":["team","footwork","select","actions"],"note":"Position commands feed the footwork skill and the action selector."},
+      {"id":"striking","label":"Striking","focus":["team","strike","residual","sum","select","actions"],"note":"The striking branch combines its action with the racket-arm correction."},
+      {"id":"phase-selection","label":"Phase selection","focus":["phases","select","actions"],"note":"Task phase selects the skill output. Playback is an illustration, not policy telemetry."}
+    ]
+  },
+  "stages": [{"label":"Planning"},{"label":"Whole-body skills"},{"label":"Refinement"},{"label":"Selection"},{"label":"Execution"}],
+  "nodes": [
+    {"id":"team","type":"backend","label":"Team planner","sublabel":"players A and B","stage":0,"row":1},
+    {"id":"footwork","type":"backend","label":"Footwork skill","sublabel":"position command","stage":1,"row":0},
+    {"id":"strike","type":"backend","label":"Striking skill","sublabel":"forehand / backhand","stage":1,"row":2},
+    {"id":"residual","type":"backend","label":"Racket-arm refinement","sublabel":"7-joint correction","stage":2,"row":1},
+    {"id":"sum","type":"backend","label":"Combine actions","sublabel":"striking + arm residual","stage":2,"row":2},
+    {"id":"phases","type":"backend","label":"Task phases","sublabel":"phase-dependent selection","stage":3,"row":0},
+    {"id":"select","type":"backend","label":"Select","sublabel":"one skill output","stage":3,"row":2},
+    {"id":"actions","type":"external","label":"Robot actions","sublabel":"whole-body command","stage":4,"row":2}
+  ],
+  "flows": [
+    {"id":"position-command","from":"team","to":"footwork","label":"position cmd","variant":"emphasis"},
+    {"id":"racket-command","from":"team","to":"strike","label":"racket cmd"},
+    {"id":"footwork-output","from":"footwork","to":"select","label":"footwork action","variant":"emphasis"},
+    {"id":"strike-output","from":"strike","to":"sum","label":"strike action"},
+    {"id":"arm-residual","from":"residual","to":"sum","label":"arm residual"},
+    {"id":"refined-output","from":"sum","to":"select","label":"refined action"},
+    {"id":"phase-gate","from":"phases","to":"select","label":"task phase","variant":"dashed"},
+    {"id":"robot-output","from":"select","to":"actions","label":"selected action"}
+  ]
+}

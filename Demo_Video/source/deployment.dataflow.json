@@ -1,6 +1,6 @@
 {
  "schema_version":1,"diagram_type":"dataflow",
- "meta":{"title":"PingPongDuo · Deployment","locale":"en","animation":"trace","visual_preset":"editorial","quality_profile":"showcase","viewBox":[1440,740],"views":[
+ "meta":{"title":"PingPongDuo · Deployment","locale":"en","animation":"trace","visual_preset":"editorial","quality_profile":"showcase","viewBox":[1080,620],"views":[
  {"id":"footwork","label":"Positioning & clearance","focus":["planner","footwork","selector","robots"],"note":"The position command feeds footwork; the selected action controls the robot."},
  {"id":"strike","label":"Strike & refinement","focus":["planner","striking","residual","sum","selector","robots"],"note":"The striking action and racket-arm residual meet at the sum before selection."},
  {"id":"phases","label":"Task-phase selection","focus":["phases","selector","footwork","striking"],"note":"Task phases choose the action branch. Website playback is an illustration, not a measured rollout."}]},
